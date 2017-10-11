@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
+import os
 
 USERNAME = "yes"
 PASSWORD = "no"
 
 app = Flask(__name__)
-app.secret_key = 'super secret key'
+app.secret_key = os.random(32)
 
 @app.route("/")   
 def root():
@@ -26,10 +27,10 @@ def login():
                     session['username'] = username
                     return redirect(url_for('welcome'))
                 else:
-                    errormessage = "Incorrect password"
+                    flash("Incorrect password")
             else:
-                errormessage = "Incorrect username and maybe password"
-        return render_template('login.html', errormessage = errormessage)
+                flash("Incorrect username and maybe password")
+        return render_template('login.html')
     else:
         return redirect(url_for('welcome'))
     
@@ -41,13 +42,15 @@ def welcome():
         if not ('username' in session):
             return redirect(url_for('login'))
         else:
-            return render_template('welcome.html', username = USERNAME)
+            flash(USERNAME)
+            return render_template('welcome.html')
     
 @app.route("/logout")
 def logout():
     if 'username' in session:
         session.pop('username')
-        return render_template("logout.html", username = USERNAME)
+        flash(USERNAME)
+        return render_template("logout.html")
     else:
         return redirect(url_for('login'))
 
