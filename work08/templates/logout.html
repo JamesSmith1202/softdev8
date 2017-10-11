@@ -1,5 +1,8 @@
 {% extends "template.html" %} 
 {% block title %}Logout{% endblock %} 
 {% block content %}
-<h1>{{username}} has been logged out!</h1>
+{% set messages = get_flashed_messages() %}
+{% for message in messages %}
+<h1>{{ message }} has been logged out!</h1>
+{% endfor %}
 {% endblock %}

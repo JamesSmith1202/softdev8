@@ -1,7 +1,10 @@
 {% extends "template.html" %} 
 {% block title %}Login{% endblock %} 
 {% block content %}
-{{errormessage}}
+{% set messages = get_flashed_messages() %}
+{% for message in messages %}
+{{ message }}
+{% endfor %}
 <form method="POST">
   <p>Username:
     <input type="text" name="username"></p>
@@ -9,4 +12,3 @@
     <input type="password" name="password"></p>
   <input type="submit">
 </form>
-{% endblock %}

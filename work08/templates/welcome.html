@@ -1,7 +1,10 @@
 {% extends "template.html" %} 
 {% block title %}Welcome!{% endblock %} 
 {% block content %}
-<h1>Welcome {{username}}!</h1>
+{% set messages = get_flashed_messages() %}
+{% for message in messages %}
+<h1>Welcome {{ message }}!</h1>
+{% endfor %}
 <form method="POST">
   <input type="submit" value = "Log out">
 </form>
